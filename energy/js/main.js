@@ -16,6 +16,9 @@ console.log(radiusArray.length);
 initRadiusArray();
 drawCircle();
 drawYear();
+drawMonth();
+drawDay();
+dayWeek();
 
 function initRadiusArray() {
     var baseRadius = 0;
@@ -45,30 +48,56 @@ function drawCircle() {
 
 function drawYear() {
     var array = ["2017", "龙之日"];
-    ctx.font="30px Arial";
-    ctx.textBaseline = "middle";
-    ctx.textAlign = "center";
+    ctx.font="26px SimHei";
+    ctx.fillStyle = "#f00";
+    var offsetY = 70;
+    drawCircleText(ctx, array, offsetY);
+}
 
-    ctx.strokeStyle = "#f00";
-    for (var i = 0; i < array.length; i++) {
-        ctx.save();
-        degree = cirleAngle / array.length * i;
-        ctx.rotate(degree);
-        ctx.strokeText(array[i], 0, -80);
-        ctx.restore();
-    }
+function drawMonth() {
+    var hourArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    ctx.font="26px SimHei";
+    ctx.fillStyle = "#f00";
+    var offsetY = radiusArray[1] - (radiusArray[1] - radiusArray[0]) / 2;
+    drawCircleText(ctx, hourArray, offsetY);
+}
 
+function drawDay() {
+    var dayArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+    // for (var day = 1; day < 31; day++) {
+    //     dayArray[day] = day;
+    // }
+    ctx.font="20px SimHei";
+    ctx.fillStyle = "#f00";
+    var offsetY = radiusArray[2] - (radiusArray[2] - radiusArray[1]) / 2;
+    drawCircleText(ctx, dayArray, offsetY);
 
 }
 
-function drawHour() {
-    var hour = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+function dayWeek() {
+    var weekArray = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    ctx.font="26px SimHei";
+    ctx.fillStyle = "#000";
+    var offsetY = radiusArray[3] - (radiusArray[3] - radiusArray[2]) / 2;
+    drawCircleText(ctx, weekArray, offsetY);
+}
 
+function () {
+    
+}
 
-    ctx.font="40px Arial";
-    ctx.textAlign = "middle";
+function drawCircleText(ctx, textArray, radius) {
 
-
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    for (var i = 0; i < textArray.length; i++) {
+        ctx.save();
+        var degree = (cirleAngle / textArray.length * i) - Math.PI / 2;
+        var y = Math.sin(degree) * radius;
+        var x = Math.cos(degree) * radius;
+        ctx.fillText(textArray[i].toString(), x, y);
+        ctx.restore();
+    }
 }
 
 
